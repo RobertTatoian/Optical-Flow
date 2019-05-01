@@ -33,3 +33,6 @@
 
 # XCode Project
 *.xcodeproj
+
+# macOS Files
+*.DS_Store
