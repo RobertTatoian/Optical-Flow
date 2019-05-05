@@ -109,31 +109,12 @@ int main(int argc, char** argv) {
 
 	//===================PLOT THE VECTORS===================
 
-	CImg<float> needleMap(frame1.width(), frame1.height());
-
-	needleMap.fill(255);
-
-	int black[] = {0,0,0};
-
-	CImg<> uAverage(u_Odd.width(),u_Odd.height());
-
-	uAverage = (u_Odd + u_Even)/2;
-
-	CImg<> vAverage(v_Odd.width(),v_Odd.height());
-
-	vAverage = (v_Odd + v_Even)/2;
-
-	for (int i = 0; i < needleMap.height(); i++) {
-		for (int j = 0; j < needleMap.width(); j++) {
-			if (j % 4 == 0 && i % 8 == 0) {
-				needleMap.draw_line(j, i, j + (uAverage(j,i)), i + (vAverage(j,i)), black);
-			}
-		}
-	}
-
+	CImg<float> needleMap = BuildNeedleMap(image_width, image_height, &u_Odd, &u_Even, &v_Odd, &v_Even);
+	
 	needleMap.display();
+	
+	needleMap.save_bmp(output_path.c_str());
 
-	needleMap.save_bmp("/Users/rt/GitHub/Optical-Flow/images/Flow.bmp");
 	//======================================================
 
 	return EXIT_SUCCESS;
